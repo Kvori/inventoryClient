@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://inventoryclient-production.up.railway.app/'
+export const BASE_URL = 'inventoryserver-production-eed4.up.railway.app/'
