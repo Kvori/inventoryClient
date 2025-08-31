@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/shared/utils/urlConfig'
+import { BASE_URL } from '@/app/urlConfig'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IUser } from '../user/types'
 

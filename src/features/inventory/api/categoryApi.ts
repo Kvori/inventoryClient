@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { ICategory } from "../types"
-import { BASE_URL } from "@/shared/utils/urlConfig"
+import { BASE_URL } from "@/app/urlConfig"
 
 export const categoriesApi = createApi({
     reducerPath: 'categoriesApi',

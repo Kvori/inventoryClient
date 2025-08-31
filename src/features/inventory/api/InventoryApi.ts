@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../../../shared/utils/urlConfig";
+import { BASE_URL } from "../../../app/urlConfig";
 import { IInventory } from "../types";
 import { ITag } from "@/features/tags/types";
 

@@ -1,1 +1,0 @@
-export const BASE_URL = 'https://inventoryserver-vsje.onrender.com/'
