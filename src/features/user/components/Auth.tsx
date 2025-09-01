@@ -5,12 +5,11 @@ import FormField from "../../../shared/components/FormField/FormField";
 import ReactionButton from "../../../shared/components/ReactionButton/ReactionButton";
 import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
-import ErrorApi from "../../../shared/utils/errorApi";
 import routes from "../../../app/config/routesConfig";
 import { useEffect } from "react";
 import { useLoginMutation, useRegisterMutation } from "../userApi";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
-import { setUser } from "../model/userSlice";
+import { setUser } from "../userSlice";
 
 const getSchema = (isLogin: boolean) =>
     z
@@ -57,16 +56,17 @@ function Auth() {
 
     const mutation = isLogin ? loginUser : registerUser
     const mutationState = isLogin
-        ? { user: loginData, loading: loginLoading, error: loginError, success: loginSuccess, status: loginStatus }
-        : { user: registerData, loading: registerLoading, error: registerError, success: registerSuccess, status: registerStatus }
+        ? { data: loginData, loading: loginLoading, error: loginError, success: loginSuccess, status: loginStatus }
+        : { data: registerData, loading: registerLoading, error: registerError, success: registerSuccess, status: registerStatus }
 
     const onSubmit: SubmitHandler<FormProps> = ({ name, email, password }) => {
         mutation({ name, email, password })
     }
 
     useEffect(() => {
-        if (mutationState.user && mutationState.success) {
-            dispatch(setUser(mutationState.user))
+        if (mutationState.data && mutationState.success) {
+            localStorage.setItem('token', mutationState.data.token)
+            dispatch(setUser(mutationState.data.user))
         }
     }, [mutationState.success])
 

@@ -5,7 +5,7 @@ import { inventoryApi } from "@/features/inventory/api/InventoryApi"
 import inventoryReducer from "@/features/inventory/model/inventorySlice"
 import { itemsApi } from "@/features/Items/itemsApi"
 import { tagsApi } from "@/features/tags/tagsApi"
-import userReducer from "@/features/user/model/userSlice"
+import userReducer from "@/features/user/userSlice"
 import { userApi } from "@/features/user/userApi"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -28,7 +28,6 @@
     "react-select": "^5.10.2",
     "remark-breaks": "^4.0.0",
     "seedrandom": "^3.0.5",
-    "socket.io-client": "^4.8.1",
     "uuid": "^11.1.0",
     "zod": "^4.0.17"
   },

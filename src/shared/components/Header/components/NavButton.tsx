@@ -1,19 +1,15 @@
-import { clearUser } from "@/features/user/model/userSlice"
-import { useLogoutMutation } from "@/features/user/userApi"
+import { clearUser } from "@/features/user/userSlice"
 import { useAppSelector, useAppDispatch } from "@/shared/hooks/redux"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import ReactionButton from "../../ReactionButton/ReactionButton"
-import { memo } from "react"
 import routesConfig from "@/app/config/routesConfig"
 
 function NavButton() {
     const { isAuth, user } = useAppSelector(state => state.userReducer)
-    const [logout] = useLogoutMutation()
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const onLogout = () => {
-        logout()
+        localStorage.removeItem('token')
         dispatch(clearUser())
     }
     return (
@@ -34,6 +30,4 @@ function NavButton() {
     );
 }
 
-const MemoNavButton = memo(NavButton)
-
-export default MemoNavButton
+export default NavButton

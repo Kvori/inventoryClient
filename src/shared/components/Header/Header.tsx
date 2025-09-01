@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import routes from "@/app/config/routesConfig";
 import { useLogoutMutation } from "@/features/user/userApi";
 import { memo, useEffect } from "react";
-import { clearUser } from "@/features/user/model/userSlice";
+import { clearUser } from "@/features/user/userSlice";
 import MemoNavButton from "./components/NavButton";
 
 function Header() {
