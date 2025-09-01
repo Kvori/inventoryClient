@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://localhost:5000/'
+export const BASE_URL = 'http://inventoryserver-production-5623.up.railway.app/'
