@@ -1,0 +1,15 @@
+import { ITag } from "../tags/types";
+
+export interface ICategory {
+    id: number,
+    title: string,
+}
+
+export interface IInventory {
+    id: number,
+    title: string,
+    description: string,
+    creatorId: number,
+    categoryId: number,
+    tags: ITag[]
+}

@@ -1,0 +1,1 @@
+export const Authorization = { authorization: `Bearer ${localStorage.getItem('token')}`}
