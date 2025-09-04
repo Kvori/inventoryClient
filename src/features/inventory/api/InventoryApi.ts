@@ -102,13 +102,13 @@ export const inventoryApi = createApi({
             ]
         }),
 
-        fetchFavoriteInventoriesByUser: build.query<IInventory[], number>({
+        fetchAvailableInventoriesByUser: build.query<IInventory[], number>({
             query: (userId) => ({
-                url: `/api/inventories/favorites/${userId}`,
+                url: `/api/inventories/available/${userId}`,
                 headers: { authorization: `Bearer ${localStorage.getItem('token')}`},
             }),
             providesTags: (result, error, userId) => [
-                { type: 'Inventories', id: `favorites_${userId}` }
+                { type: 'Inventories', id: `available_${userId}` }
             ]
         }),
 
@@ -124,5 +124,5 @@ export const {
     useUpdateInventoryFavoriteMutation,
     useCheckInventoryFavoriteQuery,
     useDeleteInventoriesMutation,
-    useFetchFavoriteInventoriesByUserQuery
+    useFetchAvailableInventoriesByUserQuery
 } = inventoryApi

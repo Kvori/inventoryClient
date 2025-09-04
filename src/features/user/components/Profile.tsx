@@ -1,6 +1,6 @@
 import { Button, Card, Col, Container, Form, ListGroup, ListGroupItem, Row, Spinner } from "react-bootstrap";
 import ReactionButton from "../../../shared/components/ReactionButton/ReactionButton";
-import { useCreateInventoryMutation, useDeleteInventoriesMutation, useFetchFavoriteInventoriesByUserQuery, useFetchUserInventoriesQuery, } from "../../inventory/api/InventoryApi";
+import { useCreateInventoryMutation, useDeleteInventoriesMutation, useFetchAvailableInventoriesByUserQuery, useFetchUserInventoriesQuery, } from "../../inventory/api/InventoryApi";
 import { useNavigate, useParams } from "react-router-dom";
 import routes from "@/app/config/routesConfig";
 import { useFetchUserQuery } from "../userApi";
@@ -17,11 +17,11 @@ function User() {
 
     const { data: userProfile, error: userError, isLoading: userLoading, isError: userIsError } = useFetchUserQuery(userId)
 
-    const { data: createdInventories, error: createdInventoriesError, isLoading: createdInventoriesLoading } = useFetchUserInventoriesQuery(userId)
-    const [deleteCreatedInvetories] = useDeleteInventoriesMutation()
-    const [createInventory] = useCreateInventoryMutation()
+    const { data: createdInventories, error: createdInventoriesError, isLoading: fetchInventoriesLoading } = useFetchUserInventoriesQuery(userId)
+    const [deleteCreatedInvetories, {isLoading: deleteInventoriesLoading}] = useDeleteInventoriesMutation()
+    const [createInventory, {isLoading: createInventoriesLoading}] = useCreateInventoryMutation()
 
-    const { data: favoriteInventories, error: favoriteInventoriesError, isLoading: favoriteInventoriesLoading } = useFetchFavoriteInventoriesByUserQuery(userId)
+    const { data: availableInventories, error: availableInventoriesError, isLoading: availableInventoriesLoading } = useFetchAvailableInventoriesByUserQuery(userId)
 
     const onCreate = () => {
         createInventory(userId)
@@ -50,7 +50,7 @@ function User() {
                             <ListGroupItem><strong>Name:</strong> {userProfile?.name}</ListGroupItem>
                             <ListGroupItem><strong>Email:</strong> {userProfile?.email}</ListGroupItem>
                         </ListGroup>
-                        <ReactionButton onClick={onCreate}>
+                        <ReactionButton isLoading={createInventoriesLoading} onClick={onCreate}>
                             Add inventory
                         </ReactionButton>
                     </Col>
@@ -62,10 +62,10 @@ function User() {
                     <Card className="p-4 shadow-sm">
                         <div className="d-flex justify-content-between align-items-center mb-3">
                             <h5 className="mb-0">User Inventories</h5>
-                            <ReactionButton onClick={() => onDelete({ inventoryIds: selectedIds, userId })} variant="outline-danger" size="sm">Delete Selected</ReactionButton>
+                            <ReactionButton isLoading={deleteInventoriesLoading} onClick={() => onDelete({ inventoryIds: selectedIds, userId })} variant="outline-danger" size="sm">Delete Selected</ReactionButton>
                         </div>
                         <InventoryList
-                            isLoading={createdInventoriesLoading}
+                            isLoading={fetchInventoriesLoading}
                             data={createdInventories}
                             className="w-100"
                             selectedIds={selectedIds}
@@ -79,8 +79,8 @@ function User() {
                             <h5 className="mb-0">Available inventory</h5>
                         </div>
                         <InventoryList
-                            isLoading={favoriteInventoriesLoading}
-                            data={favoriteInventories}
+                            isLoading={availableInventoriesLoading}
+                            data={availableInventories}
                             className="w-100"
                         />
                     </Card>
