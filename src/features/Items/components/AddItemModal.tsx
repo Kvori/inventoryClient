@@ -63,6 +63,12 @@ function AddItemModal({
         reset,
         setValue,
     } = useForm<FormProps>({ resolver: zodResolver(schema) })
+
+    useEffect(() => {
+        if (mode === 'create') {
+            reset()
+        }
+    }, [show])
     
     useEffect(() => {
         reset()

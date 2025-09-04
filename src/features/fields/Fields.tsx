@@ -63,7 +63,7 @@ function Fields() {
                     updatePositionsFileds={updatePositionsFileds}
                     createFieldBtnTitle={'Add new field'}
                     selectorOptions={FieldsSelectorOptions}
-                    fieldsLimit={15}
+                    fieldsLimit={16}
                     customIdFlag={false}
                 />
             </Container>

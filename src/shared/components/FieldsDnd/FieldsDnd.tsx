@@ -178,7 +178,7 @@ function FieldsDnd({
                 }
                 {dragFields.length < fieldsLimit && (
                     <>
-                        <ReactionButton isLoading={createField.isLoading} disabled={!!errorCreate} onClick={onCreate}>
+                        <ReactionButton isLoading={createField.isLoading} onClick={onCreate}>
                             {createFieldBtnTitle}
                         </ReactionButton>
                         {errorCreate && (
