@@ -18,15 +18,9 @@ interface ActionsFieldProps {
     inventoryId: number
 }
 
-// interface UpdatePositionsProps {
-//     inventoryId: number
-//     sortedCustomId: IField[]
-// }
-
-
 export const customIdApi = createApi({
     reducerPath: 'customIdApi',
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     tagTypes: ['CustomId'],
     endpoints: (build) => ({
         fetchCustomId: build.query<IField[], number>({

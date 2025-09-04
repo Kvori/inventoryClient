@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import routes from "../../../app/config/routesConfig";
 import { useEffect } from "react";
 import { useLoginMutation, useRegisterMutation } from "../userApi";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
 import { setUser } from "../userSlice";
 
 const getSchema = (isLogin: boolean) =>
@@ -39,7 +39,9 @@ function Auth() {
     const { user, isAuth } = useAppSelector(state => state.userReducer)
 
     useEffect(() => {
-        if (isAuth && user) navigate(routes.user.getProfile(user.id))
+        if (isAuth && user) {
+            navigate(routes.user.getProfile(user.id))
+        }
     }, [user, isAuth])
 
     const schema = getSchema(isLogin)

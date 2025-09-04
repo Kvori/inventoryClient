@@ -6,7 +6,7 @@ import Tags from '../tags/Tags'
 import { useFetchCategoriesQuery } from '../inventory/api/categoryApi'
 import { InventoryFormData, useSaveInventorySettingsMutation } from '../inventory/api/InventoryApi'
 import { useForm } from 'react-hook-form'
-import { useAppSelector } from '@/shared/hooks/redux'
+import { useAppSelector } from '@/app/hooks/redux'
 
 function Settings() {
     const { data: categories } = useFetchCategoriesQuery()
@@ -35,7 +35,7 @@ function Settings() {
 
     if (inventory) {
         const onSave = (data: InventoryFormData) => {
-            saveInventorySettings({ inventoryId: inventory.id, inventory: data, tags: selected.map(tag => ({ title: tag })) })
+            saveInventorySettings({ inventoryId: inventory.id, inventoryData: data, tags: selected.map(tag => ({ title: tag })) })
         }
         return (
             <Container>
@@ -73,15 +73,15 @@ function Settings() {
                             ))}
                         </Form.Select>
                     </FormField>
-
+{/* 
                     <FormField className="mb-3 fw-bold" name="Image">
                         <Form.Control
                             className="w-auto"
                             placeholder="Enter title..."
                             type="file"
-                        // {...register("image")}
+                        {...register("image")}
                         />
-                    </FormField>
+                    </FormField> */}
 
                     <FormField className="mb-3 fw-bold" name="Tags">
                         <Tags

@@ -1,4 +1,4 @@
-import { Container, ListGroup } from 'react-bootstrap'
+import { Card, Col, Container, ListGroup } from 'react-bootstrap'
 import FieldsComponents from './FieldsComponents'
 import ReactionButton from '../ReactionButton/ReactionButton'
 import {
@@ -81,9 +81,9 @@ function FieldsDnd({
         if (active.id !== over.id) {
             setDragFields((prevFields) => {
                 const oldIndex = prevFields.findIndex((field) => field.id === active.id)
-                const newIndex = prevFields.findIndex((field) => field.id === over.id)     
+                const newIndex = prevFields.findIndex((field) => field.id === over.id)
 
-                updatePositionsFileds({sortedFields: arrayMove(prevFields, oldIndex, newIndex), inventoryId})
+                updatePositionsFileds({ sortedFields: arrayMove(prevFields, oldIndex, newIndex), inventoryId })
                 return arrayMove(prevFields, oldIndex, newIndex)
             })
 
@@ -132,56 +132,63 @@ function FieldsDnd({
     }
 
     return (
-        <Container>
-            {customIdFlag && <div>{'CustomId example: ' + testId}</div>}
-            <ListGroup className="mb-3 content">
-                <DndContext
-                    sensors={sensors}
-                    onDragEnd={handleDragEnd}
-                    onDragStart={onDragStartField}
-                >
-                    <SortableContext
-                        items={dragFields.map((field) => field.id)}
-                        strategy={verticalListSortingStrategy}
+            <Container>
+                {customIdFlag && <div>{'CustomId example: ' + testId}</div>}
+                <ListGroup className="mb-3 content">
+                    <DndContext
+                        sensors={sensors}
+                        onDragEnd={handleDragEnd}
+                        onDragStart={onDragStartField}
                     >
-                        {dragFields.map((field) => (
-                            <FieldsComponents
-                                key={field.id}
-                                field={field}
-                                selectorOptions={selectorOptions}
-                                updateField={updateField}
-                                deleteField={deleteField}
-                                cursorStyle={{ cursor: 'grab' }}
-                                optionsDisabled={optionsDisabled}
-                                customIdFlag={customIdFlag}
-                            />
-                        ))}
-                    </SortableContext>
-                    {activeFieldId !== null && (
-                        <DragOverlay>
-                            <FieldsComponents
-                                field={dragFields.find((field) => field.id === activeFieldId)!}
-                                selectorOptions={selectorOptions}
-                                componentStyle={styleOverlay}
-                                cursorStyle={{ cursor: 'grabbing' }}
-                            />
-                        </DragOverlay>
-                    )}
-                </DndContext>
-            </ListGroup>
-            {dragFields.length < fieldsLimit && (
-                <>
-                    <ReactionButton isLoading={createField.isLoading} disabled={!!errorCreate} onClick={onCreate}>
-                        {createFieldBtnTitle}
-                    </ReactionButton>
-                    {errorCreate && (
-                        <div className="text-danger" style={{ marginTop: 5 }}>
-                            {errorCreate}
-                        </div>
-                    )}
-                </>
-            )}
-        </Container>
+                        <SortableContext
+                            items={dragFields.map((field) => field.id)}
+                            strategy={verticalListSortingStrategy}
+                        >
+                            {dragFields.map((field) => (
+                                <FieldsComponents
+                                    key={field.id}
+                                    field={field}
+                                    selectorOptions={selectorOptions}
+                                    updateField={updateField}
+                                    deleteField={deleteField}
+                                    cursorStyle={{ cursor: 'grab' }}
+                                    optionsDisabled={optionsDisabled}
+                                    customIdFlag={customIdFlag}
+                                />
+                            ))}
+                        </SortableContext>
+                        {activeFieldId !== null && (
+                            <DragOverlay>
+                                <FieldsComponents
+                                    field={dragFields.find((field) => field.id === activeFieldId)!}
+                                    selectorOptions={selectorOptions}
+                                    componentStyle={styleOverlay}
+                                    cursorStyle={{ cursor: 'grabbing' }}
+                                />
+                            </DragOverlay>
+                        )}
+                    </DndContext>
+                </ListGroup>
+                {dragFields.length === 0 &&
+                <Col md={6} className="mb-3">
+                    <Card className="d-flex align-items-center justify-content-center text-black-50" style={{ height: 100 }}>
+                        The list of fields is empty
+                    </Card>
+                </Col>
+                }
+                {dragFields.length < fieldsLimit && (
+                    <>
+                        <ReactionButton isLoading={createField.isLoading} disabled={!!errorCreate} onClick={onCreate}>
+                            {createFieldBtnTitle}
+                        </ReactionButton>
+                        {errorCreate && (
+                            <div className="text-danger" style={{ marginTop: 5 }}>
+                                {errorCreate}
+                            </div>
+                        )}
+                    </>
+                )}
+            </Container>
     )
 }
 

@@ -1,5 +1,5 @@
 import { clearUser } from "@/features/user/userSlice"
-import { useAppSelector, useAppDispatch } from "@/shared/hooks/redux"
+import { useAppSelector, useAppDispatch } from "@/app/hooks/redux"
 import { Link } from "react-router-dom"
 import ReactionButton from "../../ReactionButton/ReactionButton"
 import routesConfig from "@/app/config/routesConfig"

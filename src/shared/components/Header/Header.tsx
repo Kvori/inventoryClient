@@ -1,5 +1,5 @@
 import { Container, Navbar } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/redux";
 import ReactionButton from "../ReactionButton/ReactionButton";
 import { Link, useNavigate } from "react-router-dom";
 import routes from "@/app/config/routesConfig";

@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
@@ -27,8 +27,6 @@ const FieldsComponents = ({
 
     const {
         register,
-        handleSubmit,
-        formState: { errors },
         setValue,
         control,
     } = useForm<Record<string, any>>()
@@ -79,7 +77,7 @@ const FieldsComponents = ({
 
     const onUpdateField: SubmitHandler<Record<string, any>> = (data) => {
         if (!updateField) return
-        updateField.trigger(({ fieldData: { ...data, id: field.id }, inventoryId: field.inventoryId }))
+        updateField.trigger(({ fieldData: data, inventoryId: field.inventoryId, fieldId: field.id }))
     }
 
     const onDeleteField = () => {
@@ -89,7 +87,7 @@ const FieldsComponents = ({
 
     return (
         <div ref={setNodeRef} style={style}>
-            <Form onSubmit={handleSubmit(onUpdateField)} className="mb-4">
+            <Form className="mb-4">
                 <Row className="mb-2">
                     <Col xs={3}>
                         <div className="d-flex align-items-center">

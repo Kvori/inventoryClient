@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@/shared/components/Layout/Layout";
 import { publicRoutes, authRoutes } from "@/app/config/routes";
-import { useAppSelector } from "@/shared/hooks/redux";
+import { useAppSelector } from "@/app/hooks/redux";
 import routes from "./config/routesConfig";
 
 function AppRouter() {

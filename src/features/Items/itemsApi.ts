@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { BASE_URL } from "../../app/urlConfig"
 import { IItem, IItemValue } from "./types"
+import { Authorization } from "../user/consts"
 
 interface CreateItemProps {
     itemValues: IItemValue[],
@@ -14,7 +15,7 @@ interface DeleteItemProps {
 
 export const itemsApi = createApi({
     reducerPath: 'itemsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     tagTypes: ['Items'],
     endpoints: (build) => ({
         fetchItems: build.query<IItem[], number>({
@@ -37,7 +38,8 @@ export const itemsApi = createApi({
             query: (data) => ({
                 url: `/api/items/create`,
                 method: 'POST',
-                body: data
+                body: data,
+                headers: { authorization: `Bearer ${localStorage.getItem('token')}`}
             }),
             invalidatesTags: (result, error, { inventoryId }) => {
                 if (result) {
@@ -50,6 +52,7 @@ export const itemsApi = createApi({
             query: ({ itemIds, inventoryId }) => ({
                 url: `/api/items/delete?id=${itemIds.join('&id=')}`,
                 method: 'DELETE',
+                headers: { authorization: `Bearer ${localStorage.getItem('token')}`}
             }),
             invalidatesTags: (result, error, { inventoryId }) => {
                 if (result) {
@@ -62,7 +65,8 @@ export const itemsApi = createApi({
             query: (data) => ({
                 url: `/api/items/update`,
                 method: 'PUT',
-                body: data
+                body: data,
+                headers: { authorization: `Bearer ${localStorage.getItem('token')}`}
             }),
             invalidatesTags: (result, error, { inventoryId }) => {
                 if (result) {

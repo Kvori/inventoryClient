@@ -9,7 +9,7 @@ export interface IInventory {
     id: number,
     title: string,
     description: string,
-    userId: number,
+    creatorId: number,
     categoryId: number,
     tags: ITag[]
 }

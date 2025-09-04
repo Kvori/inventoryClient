@@ -38,7 +38,7 @@ export const userApi = createApi({
         check: build.query<{token: string, user: IUser}, void>({
             query: () => ({
                 url: `/api/users/auth`,
-                headers: Authorization
+                headers: { authorization: `Bearer ${localStorage.getItem('token')}`}
             }),
         }),
         fetchUser: build.query<IUser, number>({

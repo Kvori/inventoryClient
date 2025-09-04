@@ -1,16 +1,16 @@
 import { Container, Form, Table } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useFetchFieldsQuery } from '../../fields/fieldsApi'
 import { useDeleteItemMutation, useFetchItemsQuery } from '../itemsApi'
 import ReactionButton from '@/shared/components/ReactionButton/ReactionButton'
 import { useEffect, useRef, useState } from 'react'
 import routes from '@/app/config/routesConfig'
-import { FieldsType, IField } from '@/features/fields/types'
+import { IField } from '@/features/fields/types'
 import { useForm } from 'react-hook-form'
 import { IItem } from '../types'
-import AddItemModal from './addItemModal'
+import AddItemModal from './AddItemModal'
 import { DefaultFields, DefaultFieldsValue } from '../consts'
 import MarkDownComponent from './MarkDownComponent'
+import { useFetchFieldsByInventoryQuery } from '@/features/fields/fieldsApi'
 
 type FormValues = {
     [itemId: number]: boolean
@@ -23,7 +23,7 @@ function Items() {
 
     if (!inventoryId) navigate(routes.main.home)
 
-    const { data: fields } = useFetchFieldsQuery(inventoryId)
+    const { data: fields } = useFetchFieldsByInventoryQuery(inventoryId)
     const { data: items } = useFetchItemsQuery(inventoryId)
     const [deleteItem, { isLoading }] = useDeleteItemMutation()
 
@@ -49,7 +49,7 @@ function Items() {
         }
     }
 
-    const { register, handleSubmit, setValue, getValues, watch } =
+    const { register, handleSubmit, setValue, getValues, watch, reset } =
         useForm<FormValues>()
 
     const watchedValues = watch()
@@ -80,6 +80,7 @@ function Items() {
     const [selectAllItems, setSelectAllItems] = useState(false)
 
     useEffect(() => {
+        reset()
         setSelectAllItems(false)
         rowRefs.current = {}
         setRowPositions(null)
@@ -133,24 +134,30 @@ function Items() {
                     mode={mode}
                     itemData={itemData}
                 />
-                <div className="d-flex gap-3 mb-3">
-                    <ReactionButton onClick={onAddItem}>
-                        Add Item
-                    </ReactionButton>
-                    <Form onSubmit={handleSubmit(onDeleteItem)}>
-                        <ReactionButton isLoading={isLoading} type="submit">
-                            Delete
+                <div className="d-flex flex-column mb-3">
+                    <div className='d-flex gap-3'>
+                        <ReactionButton disabled={sortedFields.length === 0} onClick={onAddItem}>
+                            Add Item
                         </ReactionButton>
-                    </Form>
-                    <ReactionButton
-                        disabled={editState}
-                        onClick={onRedactedItem}
-                    >
-                        Edit
-                    </ReactionButton>
+                        <Form onSubmit={handleSubmit(onDeleteItem)}>
+                            <ReactionButton isLoading={isLoading} type="submit">
+                                Delete
+                            </ReactionButton>
+                        </Form>
+                        <ReactionButton
+                            disabled={editState}
+                            onClick={onRedactedItem}
+                        >
+                            Edit
+                        </ReactionButton>
+                    </div>
+                    {sortedFields.length === 0 &&
+                        <span className="text-danger">
+                            The inventory is not configured, there are no fields to fill in.
+                        </span>}
                 </div>
                 <div className="position-relative">
-                    <Table bordered responsive>
+                    <Table className="m-0" bordered responsive>
                         <thead>
                             <tr>
                                 {DefaultFields.map((field) => (
@@ -228,11 +235,7 @@ function Items() {
                                         return (
                                             <td
                                                 key={field.id}
-                                                className={`text-nowrap ${field.type !==
-                                                    FieldsType.textarea
-                                                    ? 'text-center'
-                                                    : 'w-100'
-                                                    }`}
+                                                className={`text-nowrap text-center`}
                                             >
                                                 <MarkDownComponent
                                                     type={field.type}
@@ -245,6 +248,13 @@ function Items() {
                             ))}
                         </tbody>
                     </Table>
+                    {sortedItems.length === 0 &&
+                        <div
+                            className="w-100 border-1 d-flex align-items-center justify-content-center text-black-50"
+                            style={{ border: "1px solid #dee2e6", height: 150 }}
+                        >
+                            The list of items in the inventory is empty
+                        </div>}
                     {rowPositions &&
                         sortedItems &&
                         rowPositions.map((el, index) => {
@@ -281,7 +291,6 @@ function Items() {
         )
     }
 
-    return null
 }
 
 export default Items

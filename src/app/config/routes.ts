@@ -1,7 +1,7 @@
 import Auth from "@/features/user/components/Auth";
 import Inventory from "@/features/inventory/Inventory";
 import Main from "@/features/main/Main";
-import User from "@/features/user/components/User";
+import User from "@/features/user/components/Profile";
 import routes from "@/app/config/routesConfig";
 
 interface AppRoute {

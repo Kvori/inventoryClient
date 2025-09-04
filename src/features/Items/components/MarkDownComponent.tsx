@@ -2,8 +2,9 @@ import { FieldsType } from "@/features/fields/types";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 
-function MarkDownComponent({ type, itemValue }: {type: string, itemValue: string}) {
+function MarkDownComponent({ type, itemValue }: { type: string, itemValue: string }) {    
     if (type === FieldsType.textarea) {
+        if (!itemValue) return '-'
         return (
             <ReactMarkdown remarkPlugins={[remarkBreaks]}>
                 {itemValue}

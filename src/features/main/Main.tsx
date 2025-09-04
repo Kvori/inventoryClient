@@ -1,11 +1,13 @@
 import { Container } from "react-bootstrap";
 
 function Main() {
-    return ( 
+
+
+    return (
         <Container>
-            Main Page
+            Main page
         </Container>
-     );
+    );
 }
 
 export default Main;

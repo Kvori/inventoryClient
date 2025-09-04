@@ -7,16 +7,15 @@ import { JSX } from "react";
 import Settings from "../settings/Settings";
 import Fields from "../fields/Fields";
 import Items from "../Items/components/Items";
-import TestDnd from '../../shared/components/test/test'
 import TestFields from "../fields/Fields";
 
 
-interface TestTabProps {
+interface TabProps {
     title: string,
     Component: () => JSX.Element
 }
 
-const TABS: TestTabProps[] = [
+export const Tabs_default: TabProps[] = [
     {
         title: "Items",
         Component: Items
@@ -24,18 +23,22 @@ const TABS: TestTabProps[] = [
     {
         title: "Chat",
         Component: Chat
-    },
+    }
+]
+
+
+export const Tabs_owner: TabProps[] = [
     {
         title: "Settings",
         Component: Settings
     },
-    // {
-    //     title: "Custom ID",
-    //     Component: CustomID
-    // },
+    {
+        title: "Custom ID",
+        Component: CustomID
+    },
     {
         title: "Fields",
-        Component: TestFields
+        Component: Fields
     },
     {
         title: "Access",
@@ -50,5 +53,3 @@ const TABS: TestTabProps[] = [
         Component: Export
     },
 ]
-
-export default TABS

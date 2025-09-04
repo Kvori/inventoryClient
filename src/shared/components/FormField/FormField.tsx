@@ -7,7 +7,7 @@ interface FormFieldProps extends FormControlProps {
 function FormField({ className, name, errorMessage, children, ...props }: FormFieldProps) {
     return (
         <Form.Group className={className} {...props}>
-            <Form.Label>
+            <Form.Label className="m-0">
                 {name}
             </Form.Label>
             {children}

@@ -1,10 +1,10 @@
 import AppRouter from './AppRouter'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState } from 'react'
-import { useAppDispatch } from '../shared/hooks/redux'
+import { useAppDispatch } from './hooks/redux'
 import { useCheckQuery } from '@/features/user/userApi'
 import { setUser } from '@/features/user/userSlice'
-import { Container, Spinner } from 'react-bootstrap'
+import PageLoading from '@/shared/components/PageLoading/PageLoading'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -20,9 +20,9 @@ function App() {
   }, [data, status, dispatch])
 
   if (status === 'pending' || (status === 'fulfilled' && !isUserSet)) {
-    return <Container className="m-auto">
-      <Spinner />
-    </Container>
+    return (
+      <PageLoading />
+    )
   }
 
   return <AppRouter />

@@ -2,9 +2,9 @@ import { useParams } from 'react-router-dom'
 import {
     useCreateFieldMutation,
     useDeleteFieldMutation,
-    useFetchFieldsQuery,
+    useFetchFieldsByInventoryQuery,
     useUpdateFieldMutation,
-    useUpdatePositionsFieldMutation,
+    useUpdateFieldPositionsMutation,
 } from './fieldsApi'
 import FieldsDnd from '@/shared/components/FieldsDnd/FieldsDnd'
 import { FieldsSelectorOptions } from './consts'
@@ -15,21 +15,31 @@ function Fields() {
 
     if (!id) return <div>Error</div>
 
-    const { data: fields } = useFetchFieldsQuery(id)
+    const { data: fields } = useFetchFieldsByInventoryQuery(id)
     const [createField, createMeta] = useCreateFieldMutation()
     const [updateField, updateMeta] = useUpdateFieldMutation()
     const [deleteField, deleteMeta] = useDeleteFieldMutation()
     const [updatePositionsFileds, updatePositionsMeta] =
-        useUpdatePositionsFieldMutation()
+        useUpdateFieldPositionsMutation()
 
-    const statusOfAllFieldsActions = updateMeta.isLoading ||
-        updateMeta.isError ||
+    const anyFieldIsLoading =
+        updateMeta.isLoading ||
         createMeta.isLoading ||
-        createMeta.isError ||
         deleteMeta.isLoading ||
+        updatePositionsMeta.isLoading
+
+    const anyFieldIsError =
+        updateMeta.isError ||
+        createMeta.isError ||
         deleteMeta.isError ||
-        updatePositionsMeta.isLoading ||
         updatePositionsMeta.isError
+
+    const anyFieldError =
+        updateMeta.error ||
+        createMeta.error ||
+        deleteMeta.error ||
+        updatePositionsMeta.error
+
 
     if (fields)
         return (
@@ -37,13 +47,12 @@ function Fields() {
                 <h2 className="mb-2">Fields</h2>
                 <Badge
                     className="mb-3"
-                    bg={`${statusOfAllFieldsActions
-                            ? 'danger'
-                            : 'success'
+                    bg={`${anyFieldIsLoading || anyFieldIsError
+                        ? 'danger'
+                        : 'success'
                         }`}
                 >
-                    {`Fields status: ${statusOfAllFieldsActions ? 'loading' : 'saved'
-                        }`}
+                    {`Fields status: ${anyFieldError ? `Save error` : anyFieldIsLoading ? 'loading' : 'saved'}`}
                 </Badge>
                 <FieldsDnd
                     inventoryId={Number(id)}
