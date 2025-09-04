@@ -7,10 +7,10 @@ import routes from '@/app/config/routesConfig'
 import { IField } from '@/features/fields/types'
 import { useForm } from 'react-hook-form'
 import { IItem } from '../types'
-import AddItemModal from './AddItemModal'
 import { DefaultFields, DefaultFieldsValue } from '../consts'
 import MarkDownComponent from './MarkDownComponent'
 import { useFetchFieldsByInventoryQuery } from '@/features/fields/fieldsApi'
+import AddItemModal from './AddItemModal'
 
 type FormValues = {
     [itemId: number]: boolean
@@ -75,7 +75,7 @@ function Items() {
         { id: number; top: number }[] | null
     >(null)
 
-    const rowRefs = useRef<Record<number, HTMLTableRowElement | null>>({});
+    const rowRefs = useRef<Record<number, HTMLTableRowElement | null>>({})
 
     const [selectAllItems, setSelectAllItems] = useState(false)
 
@@ -135,8 +135,11 @@ function Items() {
                     itemData={itemData}
                 />
                 <div className="d-flex flex-column mb-3">
-                    <div className='d-flex gap-3'>
-                        <ReactionButton disabled={sortedFields.length === 0} onClick={onAddItem}>
+                    <div className="d-flex gap-3">
+                        <ReactionButton
+                            disabled={sortedFields.length === 0}
+                            onClick={onAddItem}
+                        >
                             Add Item
                         </ReactionButton>
                         <Form onSubmit={handleSubmit(onDeleteItem)}>
@@ -151,10 +154,12 @@ function Items() {
                             Edit
                         </ReactionButton>
                     </div>
-                    {sortedFields.length === 0 &&
+                    {sortedFields.length === 0 && (
                         <span className="text-danger">
-                            The inventory is not configured, there are no fields to fill in.
-                        </span>}
+                            The inventory is not configured, there are no fields
+                            to fill in.
+                        </span>
+                    )}
                 </div>
                 <div className="position-relative">
                     <Table className="m-0" bordered responsive>
@@ -195,13 +200,16 @@ function Items() {
                                     style={{ cursor: 'pointer' }}
                                     key={item.id}
                                     ref={(el) => {
-                                        rowRefs.current[item.id] = el;
+                                        rowRefs.current[item.id] = el
                                     }}
                                     onClick={() => onClickItem(item.id)}
                                 >
                                     {DefaultFields.map((field) => {
                                         let value = item[field.value]
-                                        if (field.value === DefaultFieldsValue.createdAt) {
+                                        if (
+                                            field.value ===
+                                            DefaultFieldsValue.createdAt
+                                        ) {
                                             const date = new Date(
                                                 item[field.value]
                                             )
@@ -210,11 +218,11 @@ function Items() {
                                                 '.' +
                                                 (date.getMonth() + 1 < 10
                                                     ? `0${String(
-                                                        date.getMonth() + 1
-                                                    )}`
+                                                          date.getMonth() + 1
+                                                      )}`
                                                     : String(
-                                                        date.getMonth() + 1
-                                                    )) +
+                                                          date.getMonth() + 1
+                                                      )) +
                                                 '.' +
                                                 String(date.getFullYear())
                                         }
@@ -248,13 +256,14 @@ function Items() {
                             ))}
                         </tbody>
                     </Table>
-                    {sortedItems.length === 0 &&
+                    {sortedItems.length === 0 && (
                         <div
                             className="w-100 border-1 d-flex align-items-center justify-content-center text-black-50"
-                            style={{ border: "1px solid #dee2e6", height: 150 }}
+                            style={{ border: '1px solid #dee2e6', height: 150 }}
                         >
                             The list of items in the inventory is empty
-                        </div>}
+                        </div>
+                    )}
                     {rowPositions &&
                         sortedItems &&
                         rowPositions.map((el, index) => {
@@ -290,7 +299,6 @@ function Items() {
             </Container>
         )
     }
-
 }
 
 export default Items
