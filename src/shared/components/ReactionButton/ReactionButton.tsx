@@ -6,10 +6,10 @@ interface ReactionButtonProps extends ButtonProps {
     icon?: ReactNode
 }
 
-function ReactionButton({ children, isLoading, icon, ...props }: ReactionButtonProps) {
+function ReactionButton({ children, isLoading, icon, className, ...props }: ReactionButtonProps) {
     return (
         <Button
-            className="px-4 position-relative"
+            className={`px-4 position-relative ${className}`}
             disabled={isLoading}
             {...props}
         >
